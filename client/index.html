@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" ondragover="dragOverHandler(event)">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="./assets/wifi.png">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./lib/jszip.min.js"></script>
+    <script src="./lib/FileSaver.js"> </script>
+    <script src="./lib/axios.min.js"> </script>
+</head>
+
+<body onload="downloadButton()" >
+    <div class="overlay-text" ondragover="dragOverHandler(event)" ondrop="dropHandler(event)"
+        ondragleave="dragOverleave()">
+        <!-- <img src="./drop.png" alt=""> -->
+        Drop file here...
+    </div>
+    <div class="main-container">
+        <main>
+            <div id="nearby_people">
+                <div class="people-container" id="people-container">
+                    <div class="header-section">
+                        <div class="pc-header">
+                            <button class="pch-download" id="downlaod_section_button"
+                                onclick="downloadButton()">Downlaod Section</button>
+                            <!-- <div> ip </div> -->
+                            <!-- <form method="post"> -->
+                            <button class="pch-downloadAll" onclick="getZipDownload()">Download All</button>
+                            <!-- </form> -->
+                            <div class="search_and_upload_btn">
+                                <div class="input-container">
+                                    <input type="search" name="text" id="search_file_input" class="input" required=""
+                                        placeholder="Type to search...">
+                                    <div class="icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                                            <title>Search</title>
+                                            <path
+                                                d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z"
+                                                fill="none" stroke="currentColor" stroke-miterlimit="10"
+                                                stroke-width="32">
+                                            </path>
+                                            <path fill="none" stroke="currentColor" stroke-linecap="round"
+                                                stroke-miterlimit="10" stroke-width="32" d="M338.29 338.29L448 448">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <button class="pch-upload" onclick="uploadButton()">Upload Section</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pc-body">
+                        <div class="upload_section">
+                            <div>Select or Drop file to Upload</div>
+                            <label for="forFile" id="drop_zone">+</label>
+                            <input type="file" id="forFile" enctype="multipart/form-data" onchange="submitValue()"
+                                multiple="multiple">
+                            <!-- <div>
+                                    <input type="checkbox" checked name="protectedMethod" id="">
+                                    Protected Method
+                                </div> -->
+                            <div id="output-container">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="download_section">
+                            <div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script async src="./js/script.js"></script>
+
+</html>

@@ -1,0 +1,426 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* height: 100svh; */
+    width: -webkit-fill-available;
+    background-color: #6e7ebf;
+    color: white;
+    padding: 10px;
+}
+
+@font-face {
+    font-family: nunito;
+    src: url(../assets/font/Nunito-VariableFont_wght.ttf);
+}
+
+.main-container {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    transition: all 0.5s ease;
+}
+
+.overlay-text {
+    display: none;
+    font-size: 40px;
+    position: absolute;
+    width: 98vw;
+    height: 98vh;
+    color: white;
+    z-index: 25;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #6e7ebf;
+}
+
+.overlayShow {
+    opacity: 0.5;
+    /* pointer-events: none; */
+}
+
+.overlayHidden {
+    opacity: 1;
+    /* pointer-events: unset; */
+}
+
+header>button {
+    padding: 8px 6px;
+    cursor: pointer;
+    float: right;
+    margin-right: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: red;
+    color: white;
+    transition: all 0.4s ease;
+}
+
+header>button:hover {
+    transform: scale(1.05);
+}
+
+#nearby_people {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+main {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.item {
+    width: 97%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* #people-container{
+} */
+.people-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    /* margin: 20px; */
+    /* width: 1000px; */
+    /* margin: 0 30px; */
+    /* height: 98vh; */
+    border-radius: 6px;
+    border: 1px solid rgb(255, 255, 255);
+    /* z-index: 100; */
+    /* overflow: auto; */
+}
+
+.header-section {
+    position: fixed;
+    top: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0 10px;
+    z-index: 96;
+    background-color: #6e7ebf;
+    width: 96% !important;
+    /* border: 2px solid rgb(0, 128, 19); */
+    border: 1px solid white;
+    margin-top: 10px;
+    /* border-bottom: 1px solid rgb(255, 255, 255); */
+}
+
+.pc-header {
+    width: 100% !important;
+    margin: 10px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* border: 2px solid purple; */
+}
+
+.pch-download,
+.pch-upload,
+.pch-downloadAll {
+    padding: 6px 8px;
+    border: 10px;
+    font-size: 16px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid white;
+}
+
+.pch-downloadAll {
+    background-color: green;
+    display: none;
+}
+
+.pch-download {
+    background-color: rgba(41, 41, 187, 0.538);
+}
+
+.pch-upload {
+    background-color: rgb(207, 38, 66);
+    float: right;
+}
+
+.downloadContainer {
+    /* padding: 10px; */
+}
+
+/* Upload Section */
+
+.upload_section {
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    margin: 10px;
+    display: none;
+    margin-top: 90px;
+}
+
+.upload_section>div {
+    font-size: 18px;
+    margin: 10px;
+}
+
+.upload_section>label {
+    width: 95%;
+    height: 150px;
+    background-color: rgb(173, 182, 199);
+    border-radius: 15px;
+    border: 2px dashed white;
+    font-size: 25px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin: 10px auto;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+
+
+/* Download Section */
+
+.download_section {
+    display: flex;
+    /* gap: 15px; */
+    flex-direction: column;
+    /* margin: 10px; */
+    display: none;
+    /* padding: 10px 20px; */
+    padding-top: 85px;
+}
+
+#myProgress {
+    width: 90%;
+    background-color: #ddd;
+}
+
+#myBar {
+    width: 1%;
+    height: 30px;
+    background-color: #04AA6D;
+}
+
+.download_section>div {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    gap: 10px;
+    align-items: center;
+    margin: 7px 0;
+    /* width: 100%; */
+}
+
+.file_name {
+    width: 45%;
+    word-wrap: break-word;
+    /* width: 55%; */
+    font-family: 'nunito';
+    text-transform: capitalize;
+}
+
+.file_name>a>img {
+    filter: invert(1);
+    width: 20px;
+    margin-left: 4px;
+    cursor: pointer;
+}
+
+.file_size {
+    width: 20%;
+}
+
+.file_delete {
+    width: 20px;
+    cursor: pointer;
+
+}
+
+.file_delete>img {
+    width: 100%;
+    filter: invert(1);
+}
+
+/* 
+.file_view{
+    color: white;
+width: 5%;
+border: 1px solid white;
+background-color: #04AA6D;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+ */
+
+.file_download,
+.view {
+    /* width: 20%; */
+    color: white;
+    background-color: rgba(41, 41, 187, 0.538);
+    padding: 4px 10px;
+    border: 1px solid white;
+    cursor: pointer;
+    margin-bottom: 3px;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+}
+
+.view {
+    background-color: #04AA6D;
+}
+
+button>a,
+.file_view>a {
+    color: white;
+    text-decoration: none;
+}
+
+#output-container {
+    /* width: 100%; */
+    /* color: rgb(102, 102, 245)violet; */
+    /* border: 1px solid white; */
+    /* height: 20px; */
+    /* border-radius: 10px; */
+    overflow: hidden;
+    padding: 4px 3px;
+    /* display: none; */
+}
+
+.output-txt {
+    color: white;
+    font-size: 16px;
+
+}
+
+.output-progess {
+    width: 0%;
+    height: 20px;
+    background-color: violet;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.cancelme {
+    position: absolute;
+    top: 0%;
+    right: 2%;
+    cursor: pointer;
+}
+
+.uploadFileGap {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 10px 0;
+    position: relative;
+}
+
+
+.inputcheckbox {
+    width: 25px;
+    aspect-ratio: 1/1;
+    cursor: pointer;
+}
+
+.red-dot {
+    position: relative;
+}
+
+.red-dot::after {
+    width: 10px;
+    height: 10px;
+    content: "";
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+}
+
+/* search Icon CSS */
+
+/* From Uiverse.io by krlozCJ */
+.input-container {
+    position: relative;
+    --size-button: 40px;
+    color: white;
+}
+
+.input {
+    padding-left: var(--size-button);
+    height: var(--size-button);
+    font-size: 15px;
+    border: none;
+    color: #fff;
+    outline: none;
+    width: var(--size-button);
+    transition: all ease 0.3s;
+    background-color: #191A1E;
+    box-shadow: 1.5px 1.5px 3px #0e0e0e, -1.5px -1.5px 3px rgb(95 94 94 / 25%), inset 0px 0px 0px #0e0e0e, inset 0px -0px 0px #5f5e5e;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.input:focus,
+.input:not(:invalid) {
+    width: 250px;
+    cursor: text;
+    padding-right: 15px;
+    box-shadow: 0px 0px 0px #0e0e0e, 0px 0px 0px rgb(95 94 94 / 25%), inset 1.5px 1.5px 3px #0e0e0e, inset -1.5px -1.5px 3px #5f5e5e;
+}
+
+.input:focus+.icon,
+.input:not(:invalid)+.icon {
+    pointer-events: all;
+    cursor: pointer;
+}
+
+.input-container .icon {
+    position: absolute;
+    width: var(--size-button);
+    height: var(--size-button);
+    top: 0;
+    left: 0;
+    padding: 8px;
+    pointer-events: none;
+}
+
+.input-container .icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.search_and_upload_btn {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+
+@media screen and (max-width: 767px) {
+
+    /* Your CSS rules for mobile devices go here */
+    .people-container {
+        margin: 0px;
+        height: unset;
+    }
+
+    .header-section {
+        width: 100%;
+    }
+}
