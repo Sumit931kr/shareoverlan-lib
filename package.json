@@ -2,10 +2,9 @@
   "name": "shareoverlan",
   "version": "3.2.1",
   "description": "",
-  "main": "index.js",
-  "bin": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "dev": "nodemon index.js --dev",
+    "dev": "nodemon dist/index.js --dev",
     "build": "tsc -p .",
     "start": "node dist/index"
   },

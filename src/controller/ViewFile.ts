@@ -2,6 +2,7 @@
 import { Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
+import { currentPath } from '..';
 
 const ViewFile = (req:Request,res:Response) =>{
   let { name } = req.query;
@@ -13,7 +14,7 @@ const ViewFile = (req:Request,res:Response) =>{
     name = decodeURIComponent(arr.join(''))
   }
 
-  const targetPath = path.join(__dirname + name);
+  const targetPath = path.join(currentPath + name);
 
   try {
 

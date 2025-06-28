@@ -84,6 +84,17 @@ main {
     transform: translateX(-50%);
 }
 
+.dirItem {
+    padding: 8px 10px !important;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
 /* #people-container{
 } */
 .people-container {
@@ -221,15 +232,13 @@ input[type="file"] {
     gap: 10px;
     align-items: center;
     margin: 7px 0;
-    /* width: 100%; */
+   
 }
 
 .file_name {
     width: 45%;
     word-wrap: break-word;
-    /* width: 55%; */
     font-family: 'nunito';
-    text-transform: capitalize;
 }
 
 .file_name>a>img {
@@ -278,6 +287,8 @@ align-items: center;
     color: white;
     text-decoration: none;
     border-radius: 6px;
+    position: relative;
+    z-index: 10;
 }
 
 .view {
@@ -410,6 +421,61 @@ button>a,
     gap: 5px;
     align-items: center;
 }
+
+ 
+.back-button {
+ outline: none;
+ cursor: pointer;
+ border: none;
+ padding: 0.4rem 1.2rem;
+ margin-left: 30px;
+ width: 80px;
+ font-family: inherit;
+ font-size: inherit;
+ position: relative;
+ display: inline-block;
+ letter-spacing: 0.05rem;
+ font-weight: 700;
+ font-size: 17px;
+ border-radius: 500px;
+ overflow: hidden;
+ background: #66ff66;
+ color: ghostwhite;
+}
+
+.back-button span {
+ position: relative;
+ z-index: 10;
+ transition: color 0.4s;
+}
+
+.back-button:hover span {
+ color: black;
+}
+
+.back-button::before,
+.back-button::after {
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ z-index: 0;
+}
+
+.back-button::before {
+ content: "";
+ background: #000;
+ width: 120%;
+ left: -10%;
+ transform: skew(30deg);
+ transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+}
+
+.back-button:hover::before {
+ transform: translate3d(100%, 0, 0);
+}
+
 
 
 @media screen and (max-width: 767px) {

@@ -1,10 +1,10 @@
 
-import path from "path";
 import multer from "multer";
+import { currentPath } from "..";
 
 
 // Determine the appropriate directory for file uploads
-const resourceDir = path.join(__dirname, "..");
+const resourceDir = currentPath;
 
 
 // Custom storage to preserve original filename

@@ -2,6 +2,7 @@
 import path from "path";
 import fs from "fs";
 import archiver from "archiver";
+import { currentPath } from "../index";
 
 const zipName = ():string =>
   new Date(Date.now() + 19800000).toISOString().slice(0, -5) + ".zip";
@@ -35,7 +36,7 @@ const ZipDownload = async (req: any, res: any) => {
     });
 
     for (const file of files) {
-      const targetPath = path.join(__dirname, file);
+      const targetPath = path.join(currentPath, file);
       if (fs.existsSync(targetPath)) {
         archive.file(targetPath, { name: file });
       }

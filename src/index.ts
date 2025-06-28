@@ -22,6 +22,8 @@ args.forEach((arg, index) => {
     }
 });
 
+export let currentPath= "./";
+
 
 
 const localIpAddress = getLocalIpAddress();
@@ -32,18 +34,21 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(cors());
-app.use('/download', express.static('./tmp/resource'))
-app.use(express.static(path.join(__dirname, 'client')));
-// Path to the folder you want to make public
-const publicFolder = '.';
+app.use('/download', express.static('.'))
+app.use(express.static(path.join(__dirname, "../", 'client')));
+// console.log(path.join(__dirname, "../", 'client'))
 
+// Path to the folder you want to make public
+const publicFolder = currentPath;
 // Serve the folder publicly
-app.use('/public', express.static(publicFolder));
+app.use('/public', express.static(publicFolder, {
+  dotfiles: 'allow',
+}));
 
 
 // Sending the index.html file 
 app.get('/', (req:Request, res:Response) => {
-  res.sendFile(path.join(__dirname, 'client', 'index.html'))
+  res.sendFile(path.join(__dirname, "../", 'client', 'index.html'))
 })
 
 app.use('/api/v1/', fileRoutes)

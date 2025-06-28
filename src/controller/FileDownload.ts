@@ -1,44 +1,61 @@
-
+import { Request, Response } from "express";
 import path from "path";
 import fs from "fs";
-import {Response, Request} from "express";
 
-const FileDownload = (req:Request, res: Response) => {
+const DownloadFile = (req: Request, res: Response) => {
+  // Define the safe root directory (project root)
+  const baseDir = path.resolve(process.cwd());
 
-  let { name } = req.query;
-  if(req.originalUrl.includes('&')){
-    let arr = req.originalUrl.split('=')
-    arr.shift()
-    name = decodeURIComponent(arr.join(''))
+  const nameQuery = req.query.name;
+
+  if (typeof nameQuery !== 'string') {
+    res.status(400).send("Missing or invalid 'name' query parameter");
+    return;
   }
-  const targetPath = path.join(__dirname + name);
 
-  try {
-    const stats = fs.statSync(targetPath);
-    const fileSize = stats.size;
+  const filename: string = nameQuery; // ✅ Now it's guaranteed to be a string
 
-    let realname = name;
+  const currentDir = req.query.currentdir as string | undefined;
 
-    res.setHeader('Content-Disposition', `attachment; filename="${realname}"`);
-    res.setHeader('Content-Length', fileSize);
+  console.log(filename)
+  console.log(currentDir)
 
-    const fileStream = fs.createReadStream(targetPath);
+  if (!filename) {
+    res.status(400).send("Missing or invalid 'name' query parameter");
+  }
 
-    // Pipe the file stream to the response object
-    fileStream.pipe(res);
+  if (!currentDir) {
+    res.status(400).send("Missing 'currentdir' query parameter");
+    return;
+  }
 
-    // Optional: Handle errors
-    fileStream.on('error', (err) => {
-      console.error('Error streaming file:', err);
-      res.status(500).send('Internal Server Error');
+  // Normalize and resolve the requested path
+  const safeCurrentDir = path.normalize(currentDir);
+  const resolvedPath = path.resolve(baseDir, safeCurrentDir, filename);
+
+  // Security: ensure resolved path is still inside baseDir
+  if (!resolvedPath.startsWith(baseDir)) {
+    console.warn(`Blocked download attempt outside baseDir: ${resolvedPath}`);
+    res.status(403).send("Forbidden");
+    return;
+  }
+
+  // Optional: check if file actually exists before sending
+  fs.access(resolvedPath, fs.constants.R_OK, (err) => {
+    if (err) {
+      console.error(`File not accessible: ${resolvedPath}`);
+      res.status(404).send("File not found");
+      return;
+    }
+
+    // Send file for download
+    res.download(resolvedPath, (downloadErr) => {
+      if (downloadErr) {
+        console.error(`Download error:`, downloadErr);
+        res.status(500).send("Error downloading file");
+      }
     });
+  });
+};
 
-    res.status(200);
-
-  } catch (error) {
-    console.log("error " + error)
-    res.send('Something Went wrong')
-  }
-}
-
-export default FileDownload
+export default DownloadFile;

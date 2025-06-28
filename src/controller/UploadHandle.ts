@@ -1,11 +1,12 @@
 import mv from 'mv';
 import path from "path";
 import { Request, Response } from "express";
+import { currentPath } from "../index";
 
 
 // Determine the appropriate directory for file uploads
-const resourceDir = path.join(__dirname, '..');
-
+const resourceDir = currentPath;
+  
 
 const handleError = (err:any, res:Response) => {
   console.log("file upload error");

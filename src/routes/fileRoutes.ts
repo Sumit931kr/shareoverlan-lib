@@ -9,13 +9,14 @@ import DeleteFile from "../controller/DeleteFile.js";
 import FileDownload from "../controller/FileDownload.js";
 import ZipDownload from "../controller/Zipdownload.js";
 import UploadHandle from "../controller/UploadHandle.js";
+import ZipFolderDownload from "../controller/ZipFolderDownload.js";
 import { SingleUpload, handleSingleUpload } from "../controller/SimpleUpload.js";
 
 
 
 const router = express.Router();
 
-const upload = multer({
+const upload = multer({ 
   dest: "./temporary/resource",
 });
 
@@ -27,6 +28,7 @@ router.get("/access", Access);
 router.delete("/deletefile", DeleteFile);
 router.post("/upload", upload.single("file"), UploadHandle);
 router.post("/simpleupload",SingleUpload, handleSingleUpload);
+router.get("/zipfolderdownload", ZipFolderDownload);
 
 // working on this one
 router.get("/viewfile", ViewFile);
