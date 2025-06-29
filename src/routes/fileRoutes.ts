@@ -2,7 +2,6 @@ import express from "express";
 import multer from "multer";
 
 // Controllers
-import Access from "../controller/Access";
 import GetFiles from "../controller/GetFiles";
 import ViewFile from "../controller/ViewFile";
 import DeleteFile from "../controller/DeleteFile";
@@ -23,7 +22,6 @@ const upload = multer({
 router.get("/getfiles", GetFiles);
 router.get("/filedownload", FileDownload);
 router.get("/zipdownload", ZipDownload);
-router.get("/access", Access);
 
 router.delete("/deletefile", DeleteFile);
 router.post("/upload", upload.single("file"), UploadHandle);
