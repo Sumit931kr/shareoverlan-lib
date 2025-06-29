@@ -2,22 +2,22 @@ import express from "express";
 import multer from "multer";
 
 // Controllers
-import Access from "../controller/Access.js";
-import GetFiles from "../controller/GetFiles.js";
-import ViewFile from "../controller/ViewFile.js";
-import DeleteFile from "../controller/DeleteFile.js";
-import FileDownload from "../controller/FileDownload.js";
-import ZipDownload from "../controller/Zipdownload.js";
-import UploadHandle from "../controller/UploadHandle.js";
-import ZipFolderDownload from "../controller/ZipFolderDownload.js";
-import { SingleUpload, handleSingleUpload } from "../controller/SimpleUpload.js";
+import Access from "../controller/Access";
+import GetFiles from "../controller/GetFiles";
+import ViewFile from "../controller/ViewFile";
+import DeleteFile from "../controller/DeleteFile";
+import FileDownload from "../controller/FileDownload";
+import ZipDownload from "../controller/Zipdownload";
+import UploadHandle from "../controller/UploadHandle";
+import ZipFolderDownload from "../controller/ZipFolderDownload";
+import { SingleUpload, handleSingleUpload } from "../controller/SimpleUpload";
 
 
 
 const router = express.Router();
 
 const upload = multer({ 
-  dest: "./temporary/resource",
+  dest: "./",
 });
 
 router.get("/getfiles", GetFiles);

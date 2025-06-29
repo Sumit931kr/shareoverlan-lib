@@ -46,10 +46,14 @@ const DownloadFile = (req: Request, res: Response) => {
     }
 
     // Send file for download
-    res.download(resolvedPath, filename , { dotfiles :"allow"},  (downloadErr) => {
+    res.download(resolvedPath, filename, { dotfiles: "allow" }, (downloadErr) => {
       if (downloadErr) {
-        console.error(`Download error:`, downloadErr);
-        res.status(500).send("Error downloading file");
+        if (res.headersSent) {
+          console.error(`Client aborted the request:`, downloadErr);
+        } else {
+          console.error(`Download error:`, downloadErr);
+          res.status(500).send("Error downloading file");
+        }
       }
     });
   });

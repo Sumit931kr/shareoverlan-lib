@@ -40,6 +40,9 @@ const GetFiles = (req: Request, res: Response) => {
 
   fs.readdir(resolvedPath, { withFileTypes: true }, (err, files) => {
     if (err || !files || files.length === 0) {
+      if (err) {
+        console.error(`Error reading directory ${resolvedPath}:`, err);
+      }
       res.send(JSON.stringify([]));
       return;
     }
