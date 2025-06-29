@@ -1,7 +1,7 @@
 {
   "name": "shareoverlan",
-  "version": "1.0.2",
-  "description": "A Node.js library for secure file/folder sharing over LAN with Express",
+  "version": "1.0.3",
+  "description": "Simple local file sharing over LAN.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
