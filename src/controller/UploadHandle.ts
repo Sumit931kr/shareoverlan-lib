@@ -1,4 +1,4 @@
-import mv from 'mv';
+import fsExtra from 'fs-extra';
 import path from "path";
 import fs from "fs";
 import { Request, Response } from "express";
@@ -43,12 +43,15 @@ const UploadHandle = (req: Request, res: Response) => {
   const originalname = req.file.originalname;
   const targetPath = path.join(resolvedDir, originalname);
 
+  fsExtra
+    .move(tempPath, targetPath, { overwrite: true })
+    .then(() => {
+      res.status(200).json({ message: "File uploaded!" });
+    })
+    .catch((error: any) => {
+      handleError(error, res);
+    });
 
-  mv(tempPath, targetPath, { mkdirp: true }, (err: any) => {
-    if (err) return handleError(err, res);
-
-    res.status(200).json({ message: "File uploaded!" });
-  });
 };
 
 export default UploadHandle;
