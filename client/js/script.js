@@ -8,12 +8,13 @@ let nearbyPeopleContainer = document.getElementById("nearby_people");
 const outPutContainer = document.getElementById("output-container");
 let downlaodSectionButton = document.getElementById("downlaod_section_button");
 
+let uploadText = document.getElementById("upload_text");
 const searchFileInput = document.getElementById("search_file_input");
-
 let DownloadableFileData = [];
 let RealDownloadAbleFileData = [];
 
 sessionStorage.setItem("currentDir", "./");
+uploadText.innerHTML = sessionStorage.getItem("currentDir");
 
 searchFileInput.addEventListener("input", (e) => {
   let value = e.target.value.trim();
@@ -161,10 +162,17 @@ const renderDataInDOM = (data, isParentDir) => {
         </a>`;
 
         return `
-      <div class='item ${el.isDir ? "dirItem" : ""}' key="${index}" href="?dir=${el.fileName}" ${el.isDir ? 'onclick="setCurrentDir(event)"' : ""}> 
-        <div class="inputcheckboxdiv"> <input type="checkbox" class="inputcheckbox" value="${
-          el.fileName
-        }"/> </div>
+      <div class='item ${
+        el.isDir ? "dirItem" : ""
+      }' key="${index}" href="?dir=${el.fileName}" ${
+          el.isDir ? 'onclick="setCurrentDir(event)"' : ""
+        }> 
+      ${
+        !el?.isDir
+          ? `<div class="inputcheckboxdiv"> <input type="checkbox" class="inputcheckbox" value="${el.fileName}"/> </div>`
+          : ""
+      }
+
         <div class="file_name">${el.realname} 
            ${!el.isDir ? streamBtn : ""}
         </div>
@@ -172,16 +180,23 @@ const renderDataInDOM = (data, isParentDir) => {
         <div class="file_modified_date">${timeFormat(el.fileModifiedTime)}</div>
         ${
           !el.isDir
-            ? `<a class="file_download" href="/api/v1/filedownload?name=${el.fileName}${isParentDir=="true"?"":"&"+"currentdir="+currentDir}" downlaod >
+            ? `<a class="file_download" href="/api/v1/filedownload?name=${
+                el.fileName
+              }${
+                isParentDir == "true" ? "" : "&" + "currentdir=" + currentDir
+              }" downlaod >
               Download </a>`
-            : `<button class="file_download" href="/api/v1/zipfolderdownload?name=${el.fileName}${isParentDir=="true"?"":"&"+"currentdir="+currentDir}" onclick="zipFolderDownloadBtn(event)" style="margin-right:20px" >Zip Download</button>`
+            : `<button class="file_download" href="/api/v1/zipfolderdownload?name=${
+                el.fileName
+              }${
+                isParentDir == "true" ? "" : "&" + "currentdir=" + currentDir
+              }" onclick="zipFolderDownloadBtn(event)" style="margin-right:20px" >Zip Download</button>`
         }
         </div>
         <hr/>
         `;
       })
       .join("");
-
 
     downlaodSection.innerHTML =
       `${
@@ -191,32 +206,47 @@ const renderDataInDOM = (data, isParentDir) => {
       }` + mappedData;
     // <div class="file_delete"><img src="../assets/delete.png" data-filename="${el.fileName}" onclick="deleteFile(event)" /></div>
   } else if (data.length == 0) {
-    downlaodSection.innerHTML = `${
+    downlaodSection.innerHTML =
+      `${
         isParentDir == "true"
           ? ""
           : `<button class="back-button" onclick="backCurrentDir()"> <span>Back</span></button>`
-      }` + "";;
+      }` + "";
   }
 };
 
-const setCurrentDir = (e) => {
-  e.preventDefault();
+const setCurrentDir = (event) => {
+  event.preventDefault();
+  let e = event;
   let currentDir = sessionStorage.getItem("currentDir");
-  sessionStorage.setItem(
-    "currentDir",
-    currentDir + e.target.getAttribute("href").split("?dir=")[1] + "/"
-  );
+  if (!e.target.getAttribute("href")) {
+    sessionStorage.setItem(
+      "currentDir",
+      currentDir +
+        e.target.parentElement.getAttribute("href").split("?dir=")[1] +
+        "/"
+    );
+  } else if (e.target.getAttribute("href").includes("?dir=")) {
+    sessionStorage.setItem(
+      "currentDir",
+      currentDir + e.target.getAttribute("href").split("?dir=")[1] + "/"
+    );
+  }
+
   getDownloadFiles();
+
+  uploadText.innerHTML = sessionStorage.getItem("currentDir");
 };
 
 const backCurrentDir = () => {
-  let currentDir = sessionStorage.getItem("currentDir");  
+  let currentDir = sessionStorage.getItem("currentDir");
   let newDir = currentDir.split("/").slice(0, -2).join("/") + "/";
   sessionStorage.setItem("currentDir", newDir);
 
   getDownloadFiles();
 
-}
+  uploadText.innerHTML = sessionStorage.getItem("currentDir");
+};
 
 // get downlaod Files
 const getDownloadFiles = async () => {
@@ -240,7 +270,7 @@ const getDownloadFiles = async () => {
       el.fileName.toLowerCase().includes(value.toLowerCase())
     );
     DownloadableFileData = matchingArr;
-    console.log("searhing ...")
+    console.log("searhing ...");
     renderDataInDOM(matchingArr, true);
   } else {
     renderDataInDOM(data, isParentDir);
@@ -444,8 +474,9 @@ const fileUploadCode = async ({ file, i }) => {
 
   var formdata = new FormData();
   formdata.append("file", file);
+  let currentDir = sessionStorage.getItem("currentDir");
   await axios
-    .post("/api/v1/upload", formdata, config)
+    .post(`/api/v1/upload${currentDir ? `?currentdir=${currentDir}`:""}`, formdata, config)
     .then(function (res) {
       count++;
       myNum++;

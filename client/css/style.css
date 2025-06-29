@@ -196,6 +196,16 @@ main {
     margin: 10px auto;
 }
 
+#upload_text {
+    padding: 4px 5px !important;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    letter-spacing: 2.5px;
+}
+
 input[type="file"] {
     display: none;
 }
@@ -232,7 +242,7 @@ input[type="file"] {
     gap: 10px;
     align-items: center;
     margin: 7px 0;
-   
+
 }
 
 .file_name {
@@ -418,62 +428,62 @@ button>a,
 
 .search_and_upload_btn {
     display: flex;
-    gap: 5px;
+    gap: 10px;
     align-items: center;
 }
 
- 
+
 .back-button {
- outline: none;
- cursor: pointer;
- border: none;
- padding: 0.4rem 1.2rem;
- margin-left: 30px;
- width: 80px;
- font-family: inherit;
- font-size: inherit;
- position: relative;
- display: inline-block;
- letter-spacing: 0.05rem;
- font-weight: 700;
- font-size: 17px;
- border-radius: 500px;
- overflow: hidden;
- background: #66ff66;
- color: ghostwhite;
+    outline: none;
+    cursor: pointer;
+    border: none;
+    padding: 0.4rem 1.2rem;
+ margin: 10px 0 10px 30px;
+    width: 80px;
+    font-family: inherit;
+    font-size: inherit;
+    position: relative;
+    display: inline-block;
+    letter-spacing: 0.05rem;
+    font-weight: 700;
+    font-size: 17px;
+    border-radius: 500px;
+    overflow: hidden;
+    background: #66ff66;
+    color: ghostwhite;
 }
 
 .back-button span {
- position: relative;
- z-index: 10;
- transition: color 0.4s;
+    position: relative;
+    z-index: 10;
+    transition: color 0.4s;
 }
 
 .back-button:hover span {
- color: black;
+    color: black;
 }
 
 .back-button::before,
 .back-button::after {
- position: absolute;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- z-index: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
 }
 
 .back-button::before {
- content: "";
- background: #000;
- width: 120%;
- left: -10%;
- transform: skew(30deg);
- transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+    content: "";
+    background: #000;
+    width: 120%;
+    left: -10%;
+    transform: skew(30deg);
+    transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
 }
 
 .back-button:hover::before {
- transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
 }
 
 
