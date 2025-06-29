@@ -1,11 +1,8 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import qrcode from 'qrcode';
 import path from 'path';
-
-dotenv.config();
 
 import getLocalIpAddress from './extra/GetLocalIpAdress';
 import fileRoutes from './routes/fileRoutes';
