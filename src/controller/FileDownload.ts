@@ -15,10 +15,7 @@ const DownloadFile = (req: Request, res: Response) => {
 
   const filename: string = nameQuery; // ✅ Now it's guaranteed to be a string
 
-  const currentDir = req.query.currentdir as string | undefined;
-
-  console.log(filename)
-  console.log(currentDir)
+  const currentDir = req.query.currentdir as string | undefined || './'; // Default to current directory if not provided
 
   if (!filename) {
     res.status(400).send("Missing or invalid 'name' query parameter");
@@ -49,7 +46,7 @@ const DownloadFile = (req: Request, res: Response) => {
     }
 
     // Send file for download
-    res.download(resolvedPath, (downloadErr) => {
+    res.download(resolvedPath, filename , { dotfiles :"allow"},  (downloadErr) => {
       if (downloadErr) {
         console.error(`Download error:`, downloadErr);
         res.status(500).send("Error downloading file");

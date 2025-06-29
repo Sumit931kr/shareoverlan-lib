@@ -152,14 +152,20 @@ const renderDataInDOM = (data, isParentDir) => {
         return a?.isDir - b?.isDir;
       })
       .map((el, index) => {
-        let streamBtn = `
-        <a class="view_file" href=${
-          isAbleToStream(el.fileName)
-            ? `"/api/v1/viewfile?name=${el.fileName}"`
-            : `"/public/${el.fileName}"`
-        } target="_blank">
-        <img src="../assets/share-icon.png" />
-        </a>`;
+        const isVideo = isAbleToStream(el.fileName) ? "true" : "false";
+
+        const streamBtn = `
+                        <a class="view_file" href="/api/v1/viewfile?name=${el.fileName}&currentdir=${currentDir}&isvideo=${isVideo}" target="_blank">
+                         <img src="../assets/share-icon.png" />
+                        </a>`;
+
+        // let streamBtn = `
+        // <a class="view_file" href=${
+        //   isAbleToStream(el.fileName)
+        //     ? `"/api/v1/viewfile?name=${el.fileName}"` : `"/public/${el.fileName}"`
+        // } target="_blank">
+        // <img src="../assets/share-icon.png" />
+        // </a>`;
 
         return `
       <div class='item ${
@@ -476,7 +482,11 @@ const fileUploadCode = async ({ file, i }) => {
   formdata.append("file", file);
   let currentDir = sessionStorage.getItem("currentDir");
   await axios
-    .post(`/api/v1/upload${currentDir ? `?currentdir=${currentDir}`:""}`, formdata, config)
+    .post(
+      `/api/v1/upload${currentDir ? `?currentdir=${currentDir}` : ""}`,
+      formdata,
+      config
+    )
     .then(function (res) {
       count++;
       myNum++;
