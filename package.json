@@ -1,11 +1,12 @@
 {
   "name": "shareoverlan",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Simple local file sharing over LAN.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "shareoverlan": "dist/cli.js"
+    "shareoverlan": "dist/cli.js",
+    "sol": "dist/cli.js"
   },
   "files": [
     "dist/**/*",
